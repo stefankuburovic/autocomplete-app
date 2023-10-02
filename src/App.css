@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+input {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.autocomplete-list {
+  position: absolute;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-top: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+}
+
+.autocomplete-list li.autocomplete-list_not-selectable {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  cursor: unset;
+}
+
+.autocomplete-list li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.autocomplete-list li:hover {
+  background-color: #f0f0f0;
+}
