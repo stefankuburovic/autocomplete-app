@@ -26,7 +26,11 @@ input {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: none;
   background-color: white;
+}
+.autocomplete-list.active {
+  display: block;
 }
 
 .autocomplete-list li.autocomplete-list_not-selectable {

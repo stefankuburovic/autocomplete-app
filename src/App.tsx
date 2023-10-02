@@ -5,7 +5,6 @@ import data from './data/dummy.json';
 
 const App: React.FC = () => {
   const handleSelect = (selectedItem: string) => {
-    // Handle the selected item (e.g., set it in state or perform some action)
     console.log(`Selected: ${selectedItem}`);
   };
 

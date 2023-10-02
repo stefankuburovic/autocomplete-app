@@ -9,46 +9,47 @@ interface AutoCompleteProps {
 const AutoComplete: React.FC<AutoCompleteProps> = ({ data, onSelect }) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [filteredData, setFilteredData] = useState<string[]>([]);
-    //Real Data
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response: Response = await fetch(API_URL);
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             const data = await response.json();
-    //             // Extract the names from the API response
-    //             const names = data.map((user: Users) => user.name);
-    //             // Filter data based on input value
-    //             const filtered = names.filter((name: string) =>
-    //                 name.toLowerCase().includes(inputValue.toLowerCase())
-    //             );
-    //             setFilteredData(filtered);
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-    //
-    //     fetchData();
-    // }, [inputValue]);
-
-
-    //Dummy JSON example
+    const autocompleteInput = React.useRef(null)
+    // Real Data
     useEffect(() => {
-        // Simulate an asynchronous data fetch (e.g., like a REST call)
         const fetchData = async () => {
-            // Simulate a delay
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            // Filter data based on input value
-            const filtered = data.filter((item) =>
-                item.toLowerCase().includes(inputValue.toLowerCase())
-            );
-            setFilteredData(filtered);
+            try {
+                const response: Response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                // Extract the names from the API response
+                const names = data.map((user: Users) => user.name);
+                // Filter data based on input value
+                const filtered = names.filter((name: string) =>
+                    name.toLowerCase().includes(inputValue.toLowerCase())
+                );
+                setFilteredData(filtered);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
 
         fetchData();
-    }, [inputValue, data]);
+    }, [inputValue]);
+
+
+    //Dummy JSON example
+    // useEffect(() => {
+    //     // Simulate an asynchronous data fetch (e.g., like a REST call)
+    //     const fetchData = async () => {
+    //         // Simulate a delay
+    //         await new Promise((resolve) => setTimeout(resolve, 500));
+    //         // Filter data based on input value
+    //         const filtered = data.filter((item) =>
+    //             item.toLowerCase().includes(inputValue.toLowerCase())
+    //         );
+    //         setFilteredData(filtered);
+    //     };
+    //
+    //     fetchData();
+    // }, [inputValue, data]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -67,10 +68,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ data, onSelect }) => {
                 value={inputValue}
                 onChange={handleInputChange}
                 placeholder="Type to search..."
+                ref={autocompleteInput}
             />
             {
                 filteredData.map((item) => (
-                <ul className="autocomplete-list">
+                <ul className={`autocomplete-list ${document.activeElement === autocompleteInput.current  || (filteredData.length === 1 && inputValue !== filteredData[0]) ? 'active' : ''}`}>
                     {
                         filteredData.length > 0 ? filteredData.map((item) => (
                             <li key={item} onClick={() => handleItemClick(item)}>
